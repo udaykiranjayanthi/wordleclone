@@ -33,6 +33,9 @@ a {
   box-sizing: border-box;
   font-family: 'Poppins', system-ui;
 }
+*:focus{
+  /* border: 1px solid red; */
+}
 
 body{
   background-color: var(--background);
@@ -278,7 +281,7 @@ body{
 }
 
 .guess-distribution{
-  padding-block: 1rem;
+  padding-top: 0.5rem;
 }
 
 .guess-distribution .row{
@@ -301,6 +304,7 @@ body{
   min-width: min-content;
   background: #666;
   padding-inline: 8px;
+  text-align: right;
 }
 
 @media screen and (min-width:  600px){

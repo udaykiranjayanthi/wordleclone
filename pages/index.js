@@ -11,35 +11,9 @@ import { Button } from '@mui/material'
 import PopupModal from '../components/PopupModal'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-    primary: {
-      main: '#b59f3b',
-      contrastText: '#f0f0f0'
-    },
-    secondary: {
-      main: '#538d4e',
-      contrastText: '#f0f0f0'
-    }
-  },
-  typography: {
-    fontFamily: 'Poppins, Roboto',
-  }
-});
-
 
 export default function Home() {
-  const [inputs, setInputs] = useState(
-    [
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
-    ]
-  );
+  const [inputs, setInputs] = useState( ["","","","","",""] );
   const [emojiGrid, setEmojiGrid] = useState([]);
   const [letterStates, setLetterStates] = useState({});
   const [currentRow, setCurrentRow] = useState(0);
@@ -47,27 +21,57 @@ export default function Home() {
   const [snackPack, setSnackPack] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [finishStatus, setFinishStatus] = useState("");
+  const [answer, setAnswer] = useState("WORDS");
+  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
-  const answer = "WORDS";
+  //resetAllstates used so far
+  const restartGame = () => {
+    setInputs( ["","","","","",""] );
+    setEmojiGrid([]);
+    setLetterStates({});
+    setCurrentRow(0);
+    setWord("");
+    setSnackPack([]);
+    setModalOpen(false);
+    setFinishStatus("");
+    setAnswer("WORDS");
+
+    const cells = document.getElementsByClassName("cell");
+    for (let i = 0; i < cells.length; i++) {
+      cells[i].setAttribute("style", "");
+      cells[i].setAttribute("class", "cell");
+    }
+  }
+
+  const theme = createTheme({
+    palette: {
+      mode: isDarkTheme ? 'dark' : 'light',
+      primary: {
+        main: '#b59f3b',
+        contrastText: '#f0f0f0'
+      },
+      secondary: {
+        main: '#538d4e',
+        contrastText: '#f0f0f0'
+      }
+    },
+    typography: {
+      fontFamily: 'Poppins, Roboto',
+    }
+  });
 
   useEffect(() => {
     if(localStorage.getItem("userData") === null){
       const userData = {
         guessDistribution: [0, 0, 0, 0, 0, 0],
-        totalGames: 1
+        totalGames: 0,
+        currentStreak: 0,
+        maxStreak: 0
       }
       localStorage.setItem("userData", JSON.stringify(userData) );
     }
-    else{
-      const userData = JSON.parse(localStorage.getItem("userData"));
-      userData.totalGames += 1;
-      localStorage.setItem("userData", JSON.stringify(userData) );
-    }
-  
     console.log(JSON.parse(localStorage.getItem("userData")));
-    
   }, []);
-
 
   useEffect(() => {
     //add animation everytime word updates
@@ -177,7 +181,6 @@ export default function Home() {
               setFinishStatus("completed");
             }, 300*4+500+1500);
             
-            
           }
         }
       }
@@ -186,11 +189,31 @@ export default function Home() {
         prevGrid[currentRow] = emojiRow;
         return [...prevGrid]
       });
+
+      if(word === answer){
+        //update local storage when data if game completed
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        userData.totalGames += 1;
+        userData.guessDistribution[currentRow] += 1;
+        userData.currentStreak += 1;
+        if(userData.currentStreak > userData.maxStreak){
+          userData.maxStreak = userData.currentStreak;
+        }
+        localStorage.setItem("userData", JSON.stringify(userData) );
+      }
+        
+
       if(currentRow !== 5){
         setCurrentRow(row => row+1);
         setWord("");
       }
-      else if(word !== answer){
+      //failure case (6/6 guess completed)
+      else if(currentRow === 5 && word !== answer){
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        userData.currentStreak = 0;
+        userData.totalGames += 1;
+        localStorage.setItem("userData", JSON.stringify(userData) );
+
         setTimeout(() => {
           setFinishStatus("failed");
         }, 300*4+500+500);
@@ -272,11 +295,11 @@ export default function Home() {
         <title>Wordle Game</title>
       </Head>
 
-      <ThemeProvider theme={darkTheme}>
+      <ThemeProvider theme={theme}>
         <div className={styles.container}>
-          <Navbar setModalOpen={setModalOpen}/>
+          <Navbar setModalOpen={setModalOpen} isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme} />
           <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
-          <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus}/>
+          <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
 
           <div className='layout'>
             <InputGrid inputs={inputs}/>
