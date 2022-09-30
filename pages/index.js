@@ -57,6 +57,16 @@ export default function Home() {
     },
     typography: {
       fontFamily: 'Poppins, Roboto',
+    },
+    components: {
+      MuiAppBar: {
+        styleOverrides: {
+          colorPrimary: {
+            backgroundColor: isDarkTheme ? '#181818' : '#f0f0f0',
+            color: isDarkTheme ? '#f0f0f0' : '#333',
+          }
+        }
+      }
     }
   });
 
@@ -296,7 +306,7 @@ export default function Home() {
       </Head>
 
       <ThemeProvider theme={theme}>
-        <div className={styles.container}>
+        <div className="theme-wrapper light-theme">
           <Navbar setModalOpen={setModalOpen} isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme} />
           <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
           <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>

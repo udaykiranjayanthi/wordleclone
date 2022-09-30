@@ -38,8 +38,17 @@ a {
 }
 
 body{
+
+}
+
+.theme-wrapper{
   background-color: var(--background);
   color: var(--textcolor);
+}
+
+.light-theme{
+  --background: #f0f0f0;
+  --textcolor: #1b1b1b;
 }
 
 .layout{
