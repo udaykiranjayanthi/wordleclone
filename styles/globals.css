@@ -1,9 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --border: #3a3a3a;
+  --completed: #3a3a3a;
+  --exists: #b59f3b;
+  --existsDark: #7c6d29;
+  --correct: #538d4e;
+  --active: #888;
+  --keyboardKey1: #666;
+  --keyboardKey2: #999;
+  /* --keyboardBG: #1b1b1b; */
+  --background: #1b1b1b;
+  --textcolor: #f0f0f0;
+  --cellcolor: #3a3a3a;
+  --flipDelay: 0s;
+  --flipDuration: .5s;
+  --successDelay: 0s;
+}
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 a {
@@ -13,14 +31,286 @@ a {
 
 * {
   box-sizing: border-box;
+  font-family: 'Poppins', system-ui;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+body{
+  background-color: var(--background);
+  color: var(--textcolor);
+}
+
+.layout{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: calc(100vh - 64px);
+}
+
+.input-container{
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.input-grid{
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 20px 10px 10px 10px;
+  width: 270px;
+  gap: 5px;
+}
+
+.input-grid .cell {
+  border: 2px solid var(--border);
+  height: 50px;
+  text-transform: uppercase;
+  font-size: 28px;
+  font-weight: 600;
+  display: grid;
+  place-items: center;
+
+}
+
+.input-grid .active{
+  border: 2px solid var(--active);
+}
+.input-grid .cell-input-anim{
+  animation: cell-input-animation .1s ease-in-out 0s forwards;
+}
+
+.input-grid .cell-shake-anim{
+  animation: cell-shake-animation .3s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.input-grid .cell-flip-anim{
+  animation: cell-flip-animation var(--flipDuration) linear var(--flipDelay) forwards;
+}
+.input-grid .color-change-during-flip{
+  border-color: var(--cellcolor);
+  background-color: var(--cellcolor);
+}
+
+.input-grid .cell-success-anim{
+  animation: cell-success-animation .5s ease-in-out var(--successDelay) forwards;
+}
+
+.correct{
+  --cellcolor: var(--correct);
+}
+.exists{
+  --cellcolor: var(--exists);
+}
+.completed{
+  --cellcolor: var(--completed);
+}
+
+
+@keyframes cell-input-animation {
+  0%{
+    transform: scale(1);
   }
-  body {
-    color: white;
-    background: black;
+  50%{
+    transform: scale(1.1);
   }
+  100%{
+    transform: scale(1);
+  }
+}
+
+@keyframes cell-shake-animation {
+
+  10%, 90% {
+    transform: translateX(-1px);
+  }
+  
+  20%, 80% {
+    transform: translateX(2px);
+  }
+
+  30%, 50%, 70% {
+    transform: translateX(-4px);
+  }
+
+  40%, 60% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes cell-flip-animation {
+  0%{
+    transform: rotateX(0);
+  }
+  50%{
+    transform: rotateX(90deg);
+  }
+  100%{
+    transform: rotateX(0);
+  }
+}
+
+@keyframes cell-success-animation {
+
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  
+  40% {
+    transform: translateY(-20px);
+  }
+  70%{
+    transform: translateY(5px);
+  }
+}
+
+.keyboard-container{
+  
+
+}
+
+.keyboard{
+  background: var(--keyboardBG);
+  padding: 10px 0px;
+  max-width: 630px;
+  margin-inline: auto;
+  border-radius: 5px;
+}
+
+.keyboard .row{
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 3px;
+  padding-inline: 6px;
+}
+
+.keyboard .row .btn{
+  flex-shrink: 1;
+  padding: 14px 0;
+  min-width: 0;
+  width: 48px;
+  font-weight: 600;
+  text-align: center;
+  background: linear-gradient(to bottom right, var(--keyboardKey1), var(--keyboardKey2));
+  border: 1.5px outset var(--completed);
+}
+.keyboard .row .btn-enter{
+  width: 96px;
+}
+.keyboard .row .btn-back{
+  width: 72px;
+}
+
+/* To make buttons in all rows look same*/
+.keyboard .row:nth-child(1){
+  padding-inline: 12px;
+}
+.keyboard .row:nth-child(2){
+  padding-inline: 30px;
+}
+
+.keyboard .row:nth-child(3){
+  margin-bottom: 0;
+}
+
+/* Color letters of different states */
+.keyboard .row .btn.exists{
+  background: var(--exists);
+}
+.keyboard .row .btn.completed{
+  background: var(--completed);
+}
+.keyboard .row .btn.correct{
+  background: var(--correct);
+}
+.keyboard .row .btn:active{
+  background: var(--background);
+  border: 1.5px inset var(--completed);
+}
+
+
+@media screen and (min-width:  600px){
+  
+  .keyboard .row{
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+  
+  .input-grid .cell {
+    font-size: 32px;
+  }
+}
+
+/* Popup Modal styles */
+
+.popup-modal .sub-heading{
+  text-transform: uppercase;
+  text-align: center;
+  margin-block: 10px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stats div {
+  flex-grow: 1;
+  width: 128px;
+  padding: 8px;
+  background-color: #444;
+  border-radius: 8px;
+}
+
+.stats .head{
+  font-size: 20px;
+  font-weight: 600;
+}
+.stats .label{
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stats p{
+  margin-block: 0rem;
+  text-align: center;
+}
+
+.guess-distribution{
+  padding-block: 1rem;
+}
+
+.guess-distribution .row{
+  display: flex;
+  margin-bottom: 4px;
+  font-weight: 500;
+  font-size: 14px;
+}
+.guess-distribution .row .num{
+  text-align: right;
+  padding: 0px 10px;
+  width: 50px;
+  flex-grow: 0;
+}
+.guess-distribution .row .progress{
+  flex-grow: 1;
+}
+
+.guess-distribution .row .progress .progress-bar{
+  min-width: min-content;
+  background: #666;
+  padding-inline: 8px;
+}
+
+@media screen and (min-width:  600px){
+
+  .stats .head{
+    font-size: 28px;
+    font-weight: 700;
+  }
+}
+
+.rws-header{
+  color: var(--completed);
 }
