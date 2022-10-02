@@ -10,6 +10,7 @@ import Snackbars from '../components/Snackbars'
 import { Button } from '@mui/material'
 import PopupModal from '../components/PopupModal'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
+import axios from 'axios';
 
 
 export default function Home() {
@@ -34,7 +35,8 @@ export default function Home() {
     setSnackPack([]);
     setModalOpen(false);
     setFinishStatus("");
-    setAnswer("WORDS");
+
+    getAnswerWord(); // to update new answer
 
     const cells = document.getElementsByClassName("cell");
     for (let i = 0; i < cells.length; i++) {
@@ -70,6 +72,31 @@ export default function Home() {
     }
   });
 
+  function getAnswerWord() {
+
+    axios.get("https://random-word-api.herokuapp.com/word?length=5")
+    .then((response) => {
+      setAnswer(response.data[0].toUpperCase());
+    })
+    .catch((error) => {
+      handleSnackbarMessage("Error occured. Please refresh");
+    })
+    
+  }
+
+  async function isWordValid(word) {
+    try {
+      const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
+      return true;
+    } catch (error) {
+      if(error.response.status === 404){
+        return false;
+      }
+      handleSnackbarMessage("Something wrong. Try again");
+      return false;
+    }
+  }
+
   useEffect(() => {
     if(localStorage.getItem("userData") === null){
       const userData = {
@@ -80,6 +107,7 @@ export default function Home() {
       }
       localStorage.setItem("userData", JSON.stringify(userData) );
     }
+    getAnswerWord();
   }, []);
 
   useEffect(() => {
@@ -133,11 +161,15 @@ export default function Home() {
 
 
   //check valid word
-  const checkValidWord = () => {
+  const checkValidWord = async () => {
     //if a valid word - reveal the word and letter states
     //valid word => 5 characters, proper english word, should not already exist
-    if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && ["VALID", "RIGHT", "MANGO", "CRISP", "THINK", "SPEAK", "WORDS", "WADRS"].includes(word)){
+    console.log(answer);
+    
+    if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && await isWordValid(word)){
+
       const emojiRow = "";
+
       for(var i=0; i<5; i++){
         let cell = document.getElementById(currentRow+"-"+i);
 
