@@ -63,7 +63,7 @@ export default function Home() {
         styleOverrides: {
           colorPrimary: {
             backgroundColor: isDarkTheme ? '#181818' : '#f0f0f0',
-            color: isDarkTheme ? '#f0f0f0' : '#333',
+            color: isDarkTheme ? '#f0f0f0' : '#303030',
           }
         }
       }
@@ -80,7 +80,6 @@ export default function Home() {
       }
       localStorage.setItem("userData", JSON.stringify(userData) );
     }
-    console.log(JSON.parse(localStorage.getItem("userData")));
   }, []);
 
   useEffect(() => {
@@ -106,6 +105,9 @@ export default function Home() {
   //handle inputs from keydown listner and virtual keyboard
   const handleInput = (charCode) => {
     if(finishStatus === "completed" || finishStatus === "failed")
+      return
+    
+    if(modalOpen)
       return
 
     if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123)){
@@ -302,11 +304,11 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Wordle Game</title>
+        <title>Wordle</title>
       </Head>
 
       <ThemeProvider theme={theme}>
-        <div className="theme-wrapper light-theme">
+        <div className={`theme-wrapper ${isDarkTheme ? "": "light-theme"}`} id="main-content">
           <Navbar setModalOpen={setModalOpen} isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme} />
           <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
           <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
@@ -314,13 +316,12 @@ export default function Home() {
           <div className='layout'>
             <InputGrid inputs={inputs}/>
             <Keyboard letterStates={letterStates} handleInput={handleInput} currentRow={currentRow} />
-
           </div>
 
           <br/>
           <br/>
-
           <br/>
+
         </div>
       </ThemeProvider>
       

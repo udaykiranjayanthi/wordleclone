@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
-import { CelebrationTwoTone, Refresh, Share } from '@mui/icons-material';
+import { Celebration, CelebrationTwoTone, Refresh, Share } from '@mui/icons-material';
 import { RWebShare } from 'react-web-share';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -30,7 +30,7 @@ const BootstrapDialogTitle = (props) => {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2, fontSize: "18px", textTransform: "uppercase", fontWeight: 600 }} {...other}>
+    <DialogTitle sx={{ m: 0, p: 2, fontSize: "18px", fontWeight: 600 }} {...other}>
       {children}
       {onClose ? (
         <IconButton
@@ -103,9 +103,11 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
         disableRestoreFocus //to prevent submitting word not to open modal (focus on prev button)
       >
         <BootstrapDialogTitle id="customized-dialog-title" onClose={handleClose}>
+          &nbsp;
           {finishStatus === "completed" && <span>Congratulations</span>} 
           {finishStatus === "failed" && <span>Better luck next time</span>} 
           {finishStatus === "" && <span>Wordle</span>} 
+
         </BootstrapDialogTitle>
         <DialogContent dividers >
           <div className='popup-modal'>
@@ -142,7 +144,7 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
                     <div className="row" key={ind}>
                       <div className="num">{ind+1}</div>
                       <div className="progress">
-                        <div className="progress-bar" style={{width: (totalGamesWon ? item*100/totalGamesWon : 0)+"%", background: ind === emojiGrid.length-1 && finishStatus === "completed" ? "#538d4e" : "#666"}}>
+                        <div className="progress-bar" style={{width: (totalGamesWon ? item*100/totalGamesWon : 0)+"%", background: ind === emojiGrid.length-1 && finishStatus === "completed" ? "#538d4e" : "rgba(122, 122, 122, 0.7)"}}>
                           {item}
                         </div>
                       </div>

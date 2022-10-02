@@ -50,13 +50,14 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
         >
             <MenuItem
                 onClick={() => {
+                    setIsDarkTheme(prev => !prev);
                     handleMobileMenuClose();
                 }}
             >
-                <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-                    <MailIcon />
+                <IconButton size="large" color="inherit">
+                    { isDarkTheme ? <WbSunny /> : <DarkMode /> }
                 </IconButton>
-                <p style={{paddingRight: "12px"}}>Messages</p>
+                <p style={{paddingRight: "12px"}}>{ isDarkTheme ? "Light theme" : "Dark theme" }</p>
             </MenuItem>
             <MenuItem
                 onClick={() => {
@@ -102,17 +103,16 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
                             <IconButton 
                                 size="large" 
-                                aria-label="show 4 new mails" 
                                 color="inherit"
-                                onClick={() => {
+                                onClick={(e) => {
                                     setIsDarkTheme(prev => !prev);
+                                    e.currentTarget.blur();
                                 }}
                             >
                                 { isDarkTheme ? <WbSunny /> : <DarkMode /> }
                             </IconButton>
                             <IconButton
                                 size="large"
-                                aria-label="show 17 new notifications"
                                 color="inherit"
                                 onClick={() => {
                                     setModalOpen(true);
@@ -122,8 +122,10 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                             </IconButton>
                             <IconButton
                                 size="large"
-                                aria-label="account of current user"
                                 color="inherit"
+                                onClick={(e) => {
+                                    e.currentTarget.blur();
+                                }}
                             >
                                 <AccountCircle />
                             </IconButton>
