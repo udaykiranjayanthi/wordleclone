@@ -163,12 +163,13 @@ export default function Home() {
   //check valid word
   const checkValidWord = async () => {
     //if a valid word - reveal the word and letter states
-    //valid word => 5 characters, proper english word, should not already exist
+    //valid word => 5 characters, should not already exist, proper english word.
     console.log(answer);
     
     if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && await isWordValid(word)){
 
       const emojiRow = "";
+      const states = getAllLetterStates(word, answer);
 
       for(var i=0; i<5; i++){
         let cell = document.getElementById(currentRow+"-"+i);
@@ -188,8 +189,10 @@ export default function Home() {
             cell.classList.remove("cell-flip-anim");
           }, 300*i+500); 
 
+          //state, colors, keyboard, emojis
+
           let letter = word[i];
-          const state = getLetterState(letter, i);
+          const state = states[i];
 
           //for cell color after reveal
           cell.classList.add(state);
@@ -298,18 +301,43 @@ export default function Home() {
       
     });
   }
-  //check letter state of current word
-  const getLetterState = (letter, index) => {
-    if(answer[index] === letter){
-      return "correct";
+
+  //Check state of all letters in the current word
+  //It is a bit more complex than getting individual states of letters considering the case of letters may repeat ans we have to show colors accordingly
+  const getAllLetterStates = (word, answer) => {
+    //converting strings to array to make them mutable
+    word = word.split("");
+    answer = answer.split("");
+
+    let states = [];
+    //for completed case
+    for(let i=0; i<word.length; i++){
+      if(answer[i] === word[i]){
+        states[i] = "correct";
+        answer[i] = ""; 
+        word[i] = "";
+      }
     }
-    else if(answer.includes(letter)){
-      return "exists"
+    //for exists case
+    for(let i=0; i<word.length; i++){
+      if(word[i] !== "" && answer.includes(word[i])){
+        states[i] = "exists";
+        answer[answer.indexOf(word[i])] = "";
+        word[i] = "";
+      }
     }
-    else{
-      return "completed";
+    //for completed case
+    for(let i=0; i<word.length; i++){
+      if(word[i] !== ""){
+        states[i] = "completed";
+        answer[i] = "";
+        word[i] = "";
+      }
     }
+    return states;
   }
+
+
 
   //add animation to current letter added
   const toggleInputAnimation = (isAdded) => {
