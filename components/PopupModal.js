@@ -123,7 +123,7 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
                 <p className="label">Played</p>
               </div>
               <div>
-                <p className="head">{(totalGamesWon*100/userData.totalGames).toFixed(1)}</p>
+                <p className="head">{(totalGamesWon*100/userData?.totalGames).toFixed(1)}</p>
                 <p className="label">Win %</p>
               </div>
               <div>
