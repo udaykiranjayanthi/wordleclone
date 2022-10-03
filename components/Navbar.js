@@ -87,7 +87,7 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                     <Toolbar>
                         <Link href="/">
                             <a className='main-title'>
-                                <span class="w-letter">W</span>ORDLE
+                                <span className="w-letter">W</span>ORDLE
                             </a>
                         </Link>
                         
