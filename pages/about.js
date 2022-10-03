@@ -40,6 +40,7 @@ function About() {
                 <p><strong>R, C</strong> are in the word but in the wrong spot.</p>
                 <p><strong>E</strong>  is in the word and in the correct spot.</p>
                 <p>The same will also be reflected on virtual keyboard to help you on the next guess. You will win the game if your guess is finally equal to the <strong>secret word</strong> out of given 6 chances</p>
+                <p>You can restart the game by clicking on restart button or by refreshing the page. Everygame has it's random secret solution word.</p>
               </div>
             </div>
               
@@ -48,8 +49,8 @@ function About() {
 
             <div className="contact">
               <div className="image">
-                <img src="/uday.png"/>
-                
+                <img src="/uday.png" alt="Uday Kiran Jayanthi"/>
+                <meta name="description" content="Play wordle game anytime"></meta>
               </div>
               <div className="content">
                 <p><strong>UDAY KIRAN JAYANTHI</strong></p>

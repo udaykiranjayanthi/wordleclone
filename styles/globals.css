@@ -59,7 +59,7 @@ a {
 }
 
 .light-theme{
-  --background: #e7e7e7;
+  --background: #eaeaea;
   --textcolor: var(--black);
 }
 
@@ -371,7 +371,7 @@ a {
 
 .contact .content{
   flex-grow: 1;
-  padding: 1rem;
+  padding: 0rem 1rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -417,8 +417,8 @@ a {
     flex-wrap: nowrap;
     /* gap: 3rem; */
   }
-  .contact .image{
-    /* justify-content: center; */
+  .contact .content{
+    padding: 1rem 2rem;
   }
 }
 
