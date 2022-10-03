@@ -35,9 +35,9 @@ a {
   box-sizing: border-box;
   font-family: 'Poppins', system-ui;
 }
-*:focus{
-  /* border: 1px solid red; */
-}
+/* *:focus{
+  border: 1px solid red;
+} */
 
 
 .theme-wrapper{
@@ -174,10 +174,7 @@ a {
   }
 }
 
-.keyboard-container{
-  
 
-}
 
 .keyboard{
   background: var(--keyboardBG);

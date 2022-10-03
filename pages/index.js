@@ -363,7 +363,6 @@ export default function Home() {
           <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
           <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
 
-          <button onClick={fetchRandomWord}>Upload</button>
           <div className='layout'>
             <InputGrid inputs={inputs}/>
             <Keyboard letterStates={letterStates} handleInput={handleInput} currentRow={currentRow} />
