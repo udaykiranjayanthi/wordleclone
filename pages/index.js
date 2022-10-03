@@ -213,9 +213,11 @@ export default function Home() {
         userData.totalGames += 1;
         localStorage.setItem("userData", JSON.stringify(userData) );
 
+        handleSnackbarMessage(answer);
+        
         setTimeout(() => {
-          setFinishStatus("failed");
-        }, 300*4+500+500);
+          setFinishStatus("failed");       
+        }, 300*4+500+1500);
       }
     }
 
