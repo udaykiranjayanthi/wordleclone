@@ -19,7 +19,7 @@ export default function Home() {
   const [snackPack, setSnackPack] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [finishStatus, setFinishStatus] = useState("");
-  const [answer, setAnswer] = useState("WORDS");
+  const [answer, setAnswer] = useState("");
 
   //resetAllstates used so far
   const restartGame = () => {
@@ -47,7 +47,6 @@ export default function Home() {
 
     fetchRandomWord().then((word) => {
       setAnswer(word.toUpperCase());
-      console.log("-", word.toUpperCase());
     }).catch(() => {
       handleSnackbarMessage("Error occured. Please refresh");
     })
@@ -118,7 +117,6 @@ export default function Home() {
   const checkValidWord = async () => {
     //if a valid word - reveal the word and letter states
     //valid word => 5 characters, should not already exist, proper english word.
-    console.log(answer);
     
     if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && await isWordInDB(word)){
 
