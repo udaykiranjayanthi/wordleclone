@@ -11,7 +11,7 @@ import { getFirestore, collection, getDocs, addDoc, deleteDoc, doc, query, where
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyDyXutj8-6uTnlzHhFztJPPf0-BXogTfdA",
+  apiKey: process.env.FIREBASE_APIKEY,
   authDomain: "wordle-clone-next.firebaseapp.com",
   projectId: "wordle-clone-next",
   storageBucket: "wordle-clone-next.appspot.com",
