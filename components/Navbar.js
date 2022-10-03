@@ -1,18 +1,15 @@
 import { useState, useRef } from 'react';
-import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
+
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
+
 import MoreIcon from '@mui/icons-material/MoreVert';
-import { DarkMode, EqualizerOutlined, WbSunny, WbSunnyOutlined } from '@mui/icons-material';
+import { DarkModeOutlined, HelpOutline, LeaderboardOutlined, LightModeOutlined } from '@mui/icons-material';
+import Link from 'next/link';
 
 
 export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
@@ -55,7 +52,7 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                 }}
             >
                 <IconButton size="large" color="inherit">
-                    { isDarkTheme ? <WbSunny /> : <DarkMode /> }
+                    { isDarkTheme ? <LightModeOutlined /> : <DarkModeOutlined /> }
                 </IconButton>
                 <p style={{paddingRight: "12px"}}>{ isDarkTheme ? "Light theme" : "Dark theme" }</p>
             </MenuItem>
@@ -66,21 +63,21 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                 }}
             >
                 <IconButton size="large" color="inherit">
-                    <EqualizerOutlined />
+                    <LeaderboardOutlined />
                 </IconButton>
                 <p style={{paddingRight: "12px"}}>Statistics</p>
             </MenuItem>
-            <MenuItem 
-                onClick={() => {
-                    setModalOpen(true);
-                    handleMobileMenuClose();
-                }}
-            >
-                <IconButton size="large" color="inherit">
-                    <AccountCircle />
-                </IconButton>
-                <p style={{paddingRight: "12px"}}>Profile</p>
-            </MenuItem>
+
+            <Link href="/about">
+                <MenuItem
+                >
+                    <IconButton size="large" color="inherit">
+                        <HelpOutline />
+                    </IconButton>
+                    <p style={{paddingRight: "12px"}}>About</p>
+                </MenuItem>
+            </Link>
+            
         </Menu>
     );
 
@@ -88,16 +85,12 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
         <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="static" >
                     <Toolbar>
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="p"
-                            // sx={{ display: { xs: 'none', sm: 'block' } }}
-                            fontWeight={900}
-                            letterSpacing={"4px"}
-                        >
-                            WORDLE
-                        </Typography>
+                        <Link href="/">
+                            <a className='main-title'>
+                                <span class="w-letter">W</span>ORDLE
+                            </a>
+                        </Link>
+                        
 
                         <Box sx={{ flexGrow: 1 }} />
                         <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
@@ -109,7 +102,7 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                                     e.currentTarget.blur();
                                 }}
                             >
-                                { isDarkTheme ? <WbSunny /> : <DarkMode /> }
+                                { isDarkTheme ? <LightModeOutlined /> : <DarkModeOutlined /> }
                             </IconButton>
                             <IconButton
                                 size="large"
@@ -118,17 +111,21 @@ export default function Navbar({ setModalOpen, isDarkTheme, setIsDarkTheme }) {
                                     setModalOpen(true);
                                 }}
                             >
-                                <EqualizerOutlined />
+                                <LeaderboardOutlined />
                             </IconButton>
-                            <IconButton
-                                size="large"
-                                color="inherit"
-                                onClick={(e) => {
-                                    e.currentTarget.blur();
-                                }}
-                            >
-                                <AccountCircle />
-                            </IconButton>
+
+                            <Link href="/about">
+                                <IconButton
+                                    size="large"
+                                    color="inherit"
+                                    onClick={(e) => {
+                                        e.currentTarget.blur();
+                                    }}
+                                >
+                                    <HelpOutline />
+                                </IconButton>
+                            </Link>
+                                
                         </Box>
                         <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
                             <IconButton

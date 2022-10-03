@@ -2,15 +2,10 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState, useCallback } from 'react'
 import InputGrid from '../components/InputGrid'
-import Navbar from '../components/Navbar'
 import Keyboard from '../components/Keyboard'
-import styles from '../styles/Home.module.css'
 import useEventListener from '../utils/useEventListener'
 import Snackbars from '../components/Snackbars'
-import { Button } from '@mui/material'
 import PopupModal from '../components/PopupModal'
-import { ThemeProvider, createTheme } from '@mui/material/styles'
-import axios from 'axios';
 import BaseLayout from '../components/BaseLayout'
 import { fetchRandomWord, isWordInDB } from '../utils/firebase'
 
@@ -25,7 +20,6 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [finishStatus, setFinishStatus] = useState("");
   const [answer, setAnswer] = useState("WORDS");
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
 
   //resetAllstates used so far
   const restartGame = () => {
@@ -47,32 +41,7 @@ export default function Home() {
     }
   }
 
-  const theme = createTheme({
-    palette: {
-      mode: isDarkTheme ? 'dark' : 'light',
-      primary: {
-        main: '#b59f3b',
-        contrastText: '#f0f0f0'
-      },
-      secondary: {
-        main: '#538d4e',
-        contrastText: '#f0f0f0'
-      }
-    },
-    typography: {
-      fontFamily: 'Poppins, Roboto',
-    },
-    components: {
-      MuiAppBar: {
-        styleOverrides: {
-          colorPrimary: {
-            backgroundColor: isDarkTheme ? '#181818' : '#f0f0f0',
-            color: isDarkTheme ? '#f0f0f0' : '#303030',
-          }
-        }
-      }
-    }
-  });
+
 
   function getAnswerWord() {
 
@@ -351,29 +320,20 @@ export default function Home() {
 
   return (
   
-    <BaseLayout>
+    <BaseLayout setModalOpen={setModalOpen}>
 
       <Head>
         <title>Wordle</title>
       </Head>
 
-      <ThemeProvider theme={theme}>
-        <div className={`theme-wrapper ${isDarkTheme ? "": "light-theme"}`} id="main-content">
-          <Navbar setModalOpen={setModalOpen} isDarkTheme={isDarkTheme} setIsDarkTheme={setIsDarkTheme} />
-          <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
-          <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
 
-          <div className='layout'>
-            <InputGrid inputs={inputs}/>
-            <Keyboard letterStates={letterStates} handleInput={handleInput} currentRow={currentRow} />
-          </div>
+        <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
+        <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
 
-          <br/>
-          <br/>
-          <br/>
-
+        <div className='layout'>
+          <InputGrid inputs={inputs}/>
+          <Keyboard letterStates={letterStates} handleInput={handleInput} currentRow={currentRow} />
         </div>
-      </ThemeProvider>
 
     </BaseLayout>
     

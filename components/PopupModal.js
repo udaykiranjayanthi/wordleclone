@@ -167,10 +167,7 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
           >
             <Button 
               startIcon={<Share/>}
-              variant="contained" size="large" disableElevation 
-              onClick={() => {
-                console.table(emojiGrid);
-              }}  
+              variant="contained" size="large" disableElevation  
             >
               Share 
             </Button>
