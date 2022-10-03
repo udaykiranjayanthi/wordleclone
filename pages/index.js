@@ -11,6 +11,8 @@ import { Button } from '@mui/material'
 import PopupModal from '../components/PopupModal'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import axios from 'axios';
+import BaseLayout from '../components/BaseLayout'
+import { fetchRandomWord, isWordInDB } from '../utils/firebase'
 
 
 export default function Home() {
@@ -74,27 +76,13 @@ export default function Home() {
 
   function getAnswerWord() {
 
-    axios.get("https://random-word-api.herokuapp.com/word?length=5")
-    .then((response) => {
-      setAnswer(response.data[0].toUpperCase());
-    })
-    .catch((error) => {
+    fetchRandomWord().then((word) => {
+      setAnswer(word.toUpperCase());
+      console.log("-", word.toUpperCase());
+    }).catch(() => {
       handleSnackbarMessage("Error occured. Please refresh");
     })
-    
-  }
 
-  async function isWordValid(word) {
-    try {
-      const response = await axios.get(`https://api.dictionaryapi.dev/api/v2/entries/en/${word}`);
-      return true;
-    } catch (error) {
-      if(error.response.status === 404){
-        return false;
-      }
-      handleSnackbarMessage("Something wrong. Try again");
-      return false;
-    }
   }
 
   useEffect(() => {
@@ -166,7 +154,7 @@ export default function Home() {
     //valid word => 5 characters, should not already exist, proper english word.
     console.log(answer);
     
-    if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && await isWordValid(word)){
+    if(word.length===5 && !inputs.slice(0,currentRow).includes(word) && await isWordInDB(word)){
 
       const emojiRow = "";
       const states = getAllLetterStates(word, answer);
@@ -362,7 +350,9 @@ export default function Home() {
   }
 
   return (
-    <>
+  
+    <BaseLayout>
+
       <Head>
         <title>Wordle</title>
       </Head>
@@ -373,6 +363,7 @@ export default function Home() {
           <Snackbars snackPack={snackPack} setSnackPack={setSnackPack}/>
           <PopupModal emojiGrid={emojiGrid} open={modalOpen} setOpen={setModalOpen} finishStatus={finishStatus} restartGame={restartGame}/>
 
+          <button onClick={fetchRandomWord}>Upload</button>
           <div className='layout'>
             <InputGrid inputs={inputs}/>
             <Keyboard letterStates={letterStates} handleInput={handleInput} currentRow={currentRow} />
@@ -384,9 +375,8 @@ export default function Home() {
 
         </div>
       </ThemeProvider>
-      
-    
-    </>
+
+    </BaseLayout>
     
   )
 }
