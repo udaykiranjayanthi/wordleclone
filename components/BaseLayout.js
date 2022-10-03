@@ -45,7 +45,7 @@ function BaseLayout({children, setModalOpen}) {
         <meta property="og:title" content="Play Wordle Game" />
         <meta property="og:type" content="application" />
         <meta property="og:image" content="/logo.png" />
-        <meta property="og:url" content={window.location.href} />
+        {/* <meta property="og:url" content={window.location.href} /> */}
         <meta name="twitter:card" content="summary_large_image" />
 
         <meta property="og:description" content="Play Wordle game anytime for free." />

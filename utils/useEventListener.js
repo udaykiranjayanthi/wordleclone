@@ -1,6 +1,12 @@
 import { useRef, useEffect } from "react";
 
-export default function useEventListener(eventName, handler, element = window){
+export default function useEventListener(eventName, handler, element = null){
+  if (typeof window !== "undefined") {
+    // Client-side-only code
+    // This should be under definition of handler function
+    element = window;
+  }
+
   // Create a ref that stores handler
   const savedHandler = useRef();
 

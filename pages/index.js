@@ -65,6 +65,7 @@ export default function Home() {
       localStorage.setItem("userData", JSON.stringify(userData) );
     }
     getAnswerWord();
+
   }, []);
 
   useEffect(() => {
@@ -110,11 +111,7 @@ export default function Home() {
   }
 
   //create event listner
-  if (typeof window !== "undefined") {
-    // Client-side-only code
-    // This should be under definition of handler function
-    useEventListener('keydown', handleUserKeyPress, window);
-  }
+  useEventListener('keydown', handleUserKeyPress);
 
 
   //check valid word
