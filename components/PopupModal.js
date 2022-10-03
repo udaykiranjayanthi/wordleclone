@@ -127,11 +127,11 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
                 <p className="label">Win %</p>
               </div>
               <div>
-                <p className="head">{userData.currentStreak}</p>
+                <p className="head">{userData?.currentStreak}</p>
                 <p className="label">Current streak</p>
               </div>
               <div>
-                <p className="head">{userData.maxStreak}</p>
+                <p className="head">{userData?.maxStreak}</p>
                 <p className="label">Max streak</p>
               </div>
             </div>
