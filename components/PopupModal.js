@@ -116,10 +116,6 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
         <DialogContent dividers >
           <div className='popup-modal'>
 
-            {/* <div style={ {textAlign: "center"} }>
-              <CelebrationTwoTone sx={{fontSize: "64px", margin: "12px"}} color="secondary"/>
-            </div> */}
-
             <h4 className='sub-heading'>Statistics</h4>
             <div className='stats'>
               <div>
@@ -182,11 +178,8 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
           <Button
             startIcon={<Refresh/>} 
             variant="contained" size="large" color="secondary" disableElevation onClick={restartGame}>
-            New game
+            New&nbsp;game
           </Button>
-
-
-          
 
         </DialogActions>
       </BootstrapDialog>

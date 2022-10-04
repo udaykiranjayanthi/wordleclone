@@ -265,15 +265,12 @@ a {
 }
 
 .stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
 }
 
-.stats div {
-  flex-grow: 1;
-  width: 128px;
+.stats > div {
   padding: 8px;
   background-color: rgba(122, 122, 122, 0.1);
   border-radius: 8px;
@@ -284,7 +281,7 @@ a {
   font-weight: 600;
 }
 .stats .label{
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
 }
 
@@ -404,10 +401,20 @@ a {
   .input-grid .cell {
     font-size: 32px;
   }
+  .stats {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .stats > div{
+    min-width: 128px;
+  }
 
   .stats .head{
     font-size: 28px;
     font-weight: 700;
+  }
+  .stats .label{
+    font-size: 14px;
   }
 
   .about-container {
