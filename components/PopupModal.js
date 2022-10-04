@@ -60,6 +60,8 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
   const [userData, setUserData] = useState({});
   const [totalGamesWon, setTotalGamesWon] = useState();
   const [sharingText, setSharingText] = useState();
+  const [currentURL, setCurrentURL] = useState();
+
   useEffect(() => {
     if(finishStatus === "completed" || finishStatus === "failed"){
       setOpen(true)
@@ -71,14 +73,16 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
   };
 
   useEffect(() => {
+    setCurrentURL(window.location.href);
+
     if(finishStatus === "completed"){
-      setSharingText(`Wordle ${emojiGrid.length}/6 \n\n${emojiGrid.join("\n")} \n\n${window.location.href}`);
+      setSharingText(`Wordle ${emojiGrid.length}/6 \n\n${emojiGrid.join("\n")} \n\n`);
     }
     else if(finishStatus === "failed"){
-      setSharingText(`Wordle -/6 \n\n${emojiGrid.join("\n")} \n\n${window.location.href}`);
+      setSharingText(`Wordle -/6 \n\n${emojiGrid.join("\n")} \n\n`);
     }
     else {
-      setSharingText(`Play Wordle \n${window.location.href}`);
+      setSharingText(`Play Wordle \n\n`);
     }
 
     let localUserData = JSON.parse( localStorage.getItem("userData") );
@@ -160,10 +164,11 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
         <DialogActions>
           <RWebShare
             data={{
-              url: sharingText,
+              text: sharingText,
+              url: currentURL,
               title: "Share",
             }}
-            onClick={() => console.log(sharingText)}
+            onClick={() => console.log(sharingText+""+currentURL)}
           >
             <Button 
               startIcon={<Share/>}
