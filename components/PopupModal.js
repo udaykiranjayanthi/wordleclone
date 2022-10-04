@@ -160,7 +160,7 @@ export default function PopupModal({emojiGrid, open, setOpen, finishStatus, rest
         <DialogActions>
           <RWebShare
             data={{
-              url: "sharingText",
+              url: sharingText,
               title: "Share",
             }}
             onClick={() => console.log(sharingText)}
